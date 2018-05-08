@@ -3,7 +3,7 @@
 
   "name": "Twitter Media Saver",
   "description": "Save Twitter images and video with a click of a button",
-  "version": "1.0.0.1",
+  "version": "1.0.0.0",
 
   "icons": {
     "16": "images/icon16.png",
@@ -15,15 +15,7 @@
     "persistent": false,
     "scripts": [
       "js/libs/jquery.min.js",
-
-      "js/util.js",
-      "js/urls.js",
-      "js/pocket-errors.js",
-      "js/pocket-auth.js",
-      "js/pocket-api.js",
-      "js/data.js",
-      "js/app.js",
-      "js/background.js"
+      "js/util.js"
     ]
   },
 
@@ -44,6 +36,6 @@
     "tabs",
     "identity",
     "storage",
-    "https://twitter.com/*",
+    "https://twitter.com/*"
   ]
 }

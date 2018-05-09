@@ -9,25 +9,37 @@ var Downloader = {
   },
 
   buildDowloadButton: function(content_url) {
-    var result = $('<input/>').attr({
-      type: "button",
+    var result = $('<a/>').attr({
+      href: content_url,
     });
-    result.css("background-image", "url('" + Downloader.DOWNLOAD_BUTTON_URL + "')");
-    result.css("background", "url('" + Downloader.DOWNLOAD_BUTTON_URL + "')");
-    result.css("display", "inline-block");
-    result.css("background-size", "100%");
-    result.css("height", '16px');
-    result.css("width", '16px');
+    result.append($('<img/>').attr({
+      src: Downloader.DOWNLOAD_BUTTON_URL,
+      display: "inline-block",
+      height: '16px',
+      width: '16px',
+    }));
     return result;
+  },
+
+  getSingleImageLink: function(singlePhoto) {
+    return singlePhoto.find('img').prop('src');
+  },
+
+  addDownloadButton: function(idx, parentTweet) {
+    parentTweet = $(parentTweet)
+    parentTweet.addClass(Downloader.DOWNLOADER_CLASS);
+    var singlePhoto = parentTweet.find('.AdaptiveMedia-singlePhoto');
+    if (singlePhoto.length == 1) {
+      var children = parentTweet.find(
+        '.ProfileTweet-actionList'
+      );
+      children.append(Downloader.buildDowloadButton(Downloader.getSingleImageLink(singlePhoto)));
+    }
   },
 
   injectButtons: function() {
     var parentsToUpdate = $('div.tweet, .has-cards').not('.' + Downloader.DOWNLOADER_CLASS);
-    parentsToUpdate.addClass(Downloader.DOWNLOADER_CLASS);
-    var children = parentsToUpdate.find(
-      '.ProfileTweet-actionList'
-    );
-    children.append(Downloader.buildDowloadButton(''));
+    parentsToUpdate.each(Downloader.addDownloadButton);
   }
 };
 

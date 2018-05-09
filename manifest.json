@@ -37,5 +37,9 @@
     "identity",
     "storage",
     "https://twitter.com/*"
+  ],
+
+  "web_accessible_resources": [
+    "images/*"
   ]
 }

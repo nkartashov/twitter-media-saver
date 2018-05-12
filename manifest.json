@@ -11,14 +11,6 @@
     "128": "images/icon128.png"
   },
 
-  "background": {
-    "persistent": false,
-    "scripts": [
-      "js/libs/jquery.min.js",
-      "js/util.js"
-    ]
-  },
-
   "content_scripts": [
     {
       "matches": ["*://twitter.com/*"],

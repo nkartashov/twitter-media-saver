@@ -8,17 +8,26 @@ var Downloader = {
     }, 2000);
   },
 
-  buildDowloadButton: function(content_url) {
-    var result = $('<a/>').attr({
-      href: content_url,
-    });
-    result.append($('<img/>').attr({
-      src: Downloader.DOWNLOAD_BUTTON_URL,
-      display: "inline-block",
-      height: '16px',
-      width: '16px',
-    }));
-    return result;
+  buildDowloadButton: function(contentUrl) {
+    return $('<div/>', {
+      'class': 'ProfileTweet-action ProfileTweet-action--download-media',
+    }).append(
+      $('<a download/>').attr({
+        href: contentUrl,
+        download: contentUrl.split('/').pop(),
+      }).append(
+        $('<div/>', {
+          'class': 'IconContainer js-tooltip',
+        }).append(
+          $('<img/>').attr({
+            src: Downloader.DOWNLOAD_BUTTON_URL,
+            display: "inline-block",
+            height: '16px',
+            width: '16px',
+          })
+        )
+      )
+    );
   },
 
   getSingleImageLink: function(singlePhoto) {

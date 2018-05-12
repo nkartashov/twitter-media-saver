@@ -34,15 +34,35 @@ var Downloader = {
     return singlePhoto.find('img').prop('src');
   },
 
-  addDownloadButton: function(idx, parentTweet) {
-    parentTweet = $(parentTweet)
+  getSingleVideoLink: function(singleVideo) {
+    return singleVideo.find('source').prop('src');
+  },
+
+  markTweetAsProcessed: function(parentTweet) {
     parentTweet.addClass(Downloader.DOWNLOADER_CLASS);
+  },
+
+  addDownloadButton: function(idx, parentTweet) {
+    parentTweet = $(parentTweet);
     var singlePhoto = parentTweet.find('.AdaptiveMedia-singlePhoto');
-    if (singlePhoto.length == 1) {
-      var children = parentTweet.find(
-        '.ProfileTweet-actionList'
-      );
+    var children = parentTweet.find(
+      '.ProfileTweet-actionList'
+    );
+    var processed = false;
+    if (singlePhoto.length === 1) {
       children.append(Downloader.buildDowloadButton(Downloader.getSingleImageLink(singlePhoto)));
+      processed = true;
+    }
+    var singleVideo = parentTweet.find('.AdaptiveMedia-video');
+    if (singleVideo.length === 1) {
+      var link = Downloader.getSingleVideoLink(singleVideo);
+      if (link !== undefined) {
+        processed = true;
+        children.append(Downloader.buildDowloadButton(link));
+      }
+    }
+    if (processed) {
+      Downloader.markTweetAsProcessed(parentTweet);
     }
   },
 

@@ -8,62 +8,56 @@ var Downloader = {
     }, 2000);
   },
 
-  buildDowloadButton: function(contentUrl) {
-    return $('<div/>', {
-      'class': 'ProfileTweet-action ProfileTweet-action--download-media',
-    }).append(
-      $('<a download/>').attr({
-        href: contentUrl,
-        download: contentUrl.split('/').pop(),
-      }).append(
-        $('<div/>', {
-          'class': 'IconContainer js-tooltip',
-        }).append(
-          $('<img/>').attr({
-            src: Downloader.DOWNLOAD_BUTTON_URL,
-            display: "inline-block",
-            height: '16px',
-            width: '16px',
-          })
-        )
-      )
-    );
-  },
-
   getSingleImageLink: function(singlePhoto) {
     return singlePhoto.find('img').prop('src');
   },
 
   getSingleVideoLink: function(singleVideo) {
-    return singleVideo.find('source').prop('src');
+    var videoItem = singleVideo.find('source');
+    if (videoItem.length === 0) {
+      videoItem = singleVideo.find('video');
+    }
+    return videoItem.prop('src');
   },
 
   markItemAsProcessed: function(parentItem) {
     parentItem.addClass(Downloader.DOWNLOADER_CLASS);
   },
 
+  trimLarge: function(link) {
+    var LARGE_POSTFIX = ':large';
+    if (!link.includes(LARGE_POSTFIX)) {
+      return link;
+    }
+    return link.substring(0, link.indexOf(':large'));
+  },
+
   addDownloadButton: function(idx, parentTweet) {
     parentTweet = $(parentTweet);
-    var singlePhoto = parentTweet.find('.AdaptiveMedia-singlePhoto');
+    var callback = function() {
+      var singlePhoto = parentTweet.find('.AdaptiveMedia-singlePhoto');
+      var singleVideo = parentTweet.find('.AdaptiveMedia-video');
+      if (singlePhoto.length === 1) {
+        link = Downloader.getSingleImageLink(singlePhoto);
+        console.log('Found a single photo at link ' + link);
+      } else if (singleVideo.length === 1) {
+        link = Downloader.getSingleVideoLink(singleVideo);
+        console.log('Found a single video at link ' + link);
+      } else {
+        link = $('.Gallery-media').find('img').prop('src');
+        console.log('Found a zoomed in photo at link ' + link);
+      }
+      if (link !== undefined) {
+        link = Downloader.trimLarge(link);
+        console.log('Opening a new tab with link ' + link);
+        window.open(link);
+      }
+    };
     var actionBar = parentTweet.find(
       '.ProfileTweet-actionList'
     );
-    var processed = false;
-    if (singlePhoto.length === 1) {
-      actionBar.append(Downloader.buildDowloadButton(Downloader.getSingleImageLink(singlePhoto)));
-      processed = true;
-    }
-    var singleVideo = parentTweet.find('.AdaptiveMedia-video');
-    if (singleVideo.length === 1) {
-      var link = Downloader.getSingleVideoLink(singleVideo);
-      if (link !== undefined) {
-        processed = true;
-        actionBar.append(Downloader.buildDowloadButton(link));
-      }
-    }
-    if (processed) {
-      Downloader.markItemAsProcessed(parentTweet);
-    }
+    actionBar.append(Downloader.buildDynamicDowloadButton(callback));
+    Downloader.markItemAsProcessed(parentTweet);
   },
 
   getActionBarFromMaximizedTweet: function(parentItem) {
@@ -71,9 +65,8 @@ var Downloader = {
   },
 
   buildDynamicDowloadButton: function(callback) {
-    var linkObject = $('<a download/>').attr({
+    var linkObject = $('<a/>').attr({
       href: '',
-      download: '',
     });
     linkObject.click(callback);
     linkObject.append(
@@ -95,27 +88,10 @@ var Downloader = {
     );
   },
 
-  addDynamicDownloadButton: function(idx, parentItem) {
-    parentItem = $(parentItem);
-    var actionList = Downloader.getActionBarFromMaximizedTweet(parentItem);
-    var callback = function () {
-      var imageLink = parentItem.find('.Gallery-media').find('img').prop('src');
-      if (imageLink !== undefined) {
-        imageLink = imageLink.substring(0, imageLink.indexOf(':large'));
-        window.location = imageLink;
-      }
-    };
-    actionList.append(Downloader.buildDynamicDowloadButton(callback));
-    // Downloader.markItemAsProcessed(parentItem);
-  },
-
   injectButtons: function() {
     var parentsToUpdate = $('div.tweet, .has-cards').not('.' + Downloader.DOWNLOADER_CLASS);
     parentsToUpdate.each(Downloader.addDownloadButton);
-
-    var maximizedTweet = $('.Gallery, .with-tweet').not('.' + Downloader.DOWNLOADER_CLASS);
-    maximizedTweet.each(Downloader.addDynamicDownloadButton);
   }
 };
 
-Downloader.init()
+Downloader.init();

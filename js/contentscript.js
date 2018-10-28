@@ -101,10 +101,12 @@ var Downloader = {
     var callback = function () {
       var imageLink = parentItem.find('.Gallery-media').find('img').prop('src');
       if (imageLink !== undefined) {
+        imageLink = imageLink.substring(0, imageLink.indexOf(':large'));
         window.location = imageLink;
       }
     };
     actionList.append(Downloader.buildDynamicDowloadButton(callback));
+    // Downloader.markItemAsProcessed(parentItem);
   },
 
   injectButtons: function() {

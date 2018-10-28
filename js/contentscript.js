@@ -89,7 +89,7 @@ var Downloader = {
   },
 
   injectButtons: function() {
-    var parentsToUpdate = $('div.tweet, .has-cards').not('.' + Downloader.DOWNLOADER_CLASS);
+    var parentsToUpdate = $('div.tweet.has-cards').not('.' + Downloader.DOWNLOADER_CLASS);
     parentsToUpdate.each(Downloader.addDownloadButton);
   }
 };

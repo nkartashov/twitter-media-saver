@@ -56,12 +56,20 @@ var Downloader = {
     var actionBar = parentTweet.find(
       '.ProfileTweet-actionList'
     );
-    actionBar.append(Downloader.buildDynamicDowloadButton(callback));
+    var button = Downloader.buildDynamicDowloadButton(callback);
+    Downloader.addButtonToActionBar(button, actionBar);
     Downloader.markItemAsProcessed(parentTweet);
   },
 
-  getActionBarFromMaximizedTweet: function(parentItem) {
-    return parentItem.find('.stream-item-footer').find('.ProfileTweet-actionList');
+  addButtonToActionBar: function(button, actionBar) {
+    var moreButton = actionBar.find('div.ProfileTweet-action--more');
+    if (moreButton.length) {
+      console.log('Inserting into zoomed action bar');
+      moreButton.before(button);
+    } else {
+      console.log('Inserting into normal action bar');
+      actionBar.append(button);
+    }
   },
 
   nestElements: function(elements) {

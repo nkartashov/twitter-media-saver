@@ -64,28 +64,33 @@ var Downloader = {
     return parentItem.find('.stream-item-footer').find('.ProfileTweet-actionList');
   },
 
-  buildDynamicDowloadButton: function(callback) {
-    var linkObject = $('<a/>').attr({
-      href: '',
+  nestElements: function(elements) {
+    var current = null;
+    elements.reverse().forEach((e) => {
+      e.append(current);
+      current = e;
     });
-    linkObject.click(callback);
-    linkObject.append(
-      $('<div/>', {
-        'class': 'IconContainer js-tooltip',
-      }).append(
-        $('<img/>').attr({
-          src: Downloader.DOWNLOAD_BUTTON_URL,
-          display: "inline-block",
-          height: '16px',
-          width: '16px',
-        })
-      )
-    );
-    return $('<div/>', {
+    return current;
+  },
+
+  buildDynamicDowloadButton: function(callback) {
+    var parentDiv = $('<div/>', {
       'class': 'ProfileTweet-action ProfileTweet-action--download-media',
-    }).append(
-      linkObject
-    );
+    });
+    var button = $('<button/>', {
+      'class': 'ProfileTweet-actionButton js-actionButton',
+    });
+    button.click(callback);
+    var iconDiv = $('<div/>', {
+      'class': 'IconContainer js-tooltip',
+    });
+    var icon = $('<img/>', {
+      src: Downloader.DOWNLOAD_BUTTON_URL,
+      display: "inline-block",
+      height: '16px',
+      width: '16px',
+    });
+    return Downloader.nestElements([parentDiv, button, iconDiv, icon]);
   },
 
   injectButtons: function() {

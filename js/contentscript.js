@@ -1,5 +1,6 @@
 var Downloader = {
-  DOWNLOAD_BUTTON_URL: chrome.extension.getURL('images/download-button.svg'),
+  DOWNLOAD_BUTTON_URL: chrome.extension.getURL('images/download-grey-64778D.svg'),
+  DOWNLOAD_BUTTON_HOVER_URL: chrome.extension.getURL('images/download-blue-00A2EC.svg'),
   DOWNLOADER_CLASS: "has-downloader-button",
 
   init: function() {
@@ -92,11 +93,8 @@ var Downloader = {
     var iconDiv = $('<div/>', {
       'class': 'IconContainer js-tooltip',
     });
-    var icon = $('<img/>', {
-      src: Downloader.DOWNLOAD_BUTTON_URL,
-      display: "inline-block",
-      height: '16px',
-      width: '16px',
+    var icon = $('<i/>', {
+      'class': 'fas fa-arrow-down',
     });
     return Downloader.nestElements([parentDiv, button, iconDiv, icon]);
   },

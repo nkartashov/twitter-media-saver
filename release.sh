@@ -8,6 +8,7 @@ rm -rf "$TEMP_DIR"/.git
 rm -rf "$TEMP_DIR"/.gitignore
 rm -rf "$TEMP_DIR"/.DS_Store
 rm -rf "$TEMP_DIR"/release.*
+rm -rf "$TEMP_DIR"/screenshots
 
 zip -r "$SCRIPT_DIR"/release.zip "$TEMP_DIR"/
 rm -rf "$TEMP_DIR"

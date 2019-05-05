@@ -18,6 +18,7 @@
       "run_at": "document_idle",
       "js": [
         "js/libs/jquery.min.js",
+        "js/raf-ff-fix.js",
         "js/fontawesome.js",
       	"js/contentscript.js"
   	  ]

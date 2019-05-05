@@ -1,0 +1,45 @@
+workflows:
+  version: 2
+  main:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master
+      - publish:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:lts
+    steps:
+      - checkout
+      - run:
+          name: "Package Extension"
+          command: |
+            release.sh
+      - persist_to_workspace:
+          root: /root/project
+          paths:
+            - release.zip
+
+  # publish:
+  #   docker:
+  #     - image: cibuilds/chrome-extension:latest
+  #   environment:
+  #     - APP_ID: ialfbkhnjhhgeplfephldjaofhggmkjn
+  #   steps:
+  #     - attach_workspace:
+  #         at: /root/workspace
+  #     - run:
+  #         name: "Publish to the Google Chrome Store"
+  #         command: |
+  #           ACCESS_TOKEN=$(curl "https://accounts.google.com/o/oauth2/token" -d "client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&refresh_token=${REFRESH_TOKEN}&grant_type=refresh_token&redirect_uri=urn:ietf:wg:oauth:2.0:oob" | jq -r .access_token)
+  #           curl -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "x-goog-api-version: 2" -X PUT -T /root/workspace/build.zip -v "https://www.googleapis.com/upload/chromewebstore/v1.1/items/${APP_ID}"
+  #           curl -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "x-goog-api-version: 2" -H "Content-Length: 0" -X POST -v "https://www.googleapis.com/chromewebstore/v1.1/items/${APP_ID}/publish"

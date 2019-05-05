@@ -20,11 +20,13 @@ jobs:
       - image: circleci/node:lts
     steps:
       - checkout
-      - run: echo "hello world" ls
-      # - persist_to_workspace:
-      #     root: /root/project
-      #     paths:
-      #       - release.zip
+      - run:
+          name: "Package extension"
+          command: ls
+      - persist_to_workspace:
+          root: /root/project
+          paths:
+            - release.zip
 
   # publish:
   #   docker:

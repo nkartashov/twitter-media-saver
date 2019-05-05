@@ -6,12 +6,12 @@ workflows:
           filters:
             branches:
               only: master
-      - publish:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+      # - publish:
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         only: master
 
 version: 2
 jobs:

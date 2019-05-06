@@ -12,6 +12,12 @@ workflows:
           filters:
             branches:
               only: master
+      - firefox-publish:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
 
 version: 2
 jobs:
@@ -40,3 +46,15 @@ jobs:
       - run:
           name: "Publish to the Google Chrome Store"
           command: bash scripts/chrome_publish.sh /tmp/workspace/package.zip
+
+  firefox-publish:
+    docker:
+      - image: circleci/node:lts
+    steps:
+      - checkout
+      - run: npm install web-ext
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: "Publish to the Firefox Addon Store"
+          command: bash scripts/firefox_publish.sh /tmp/workspace/package.zip

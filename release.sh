@@ -7,6 +7,7 @@ cp -r "$SCRIPT_DIR"/ "$TEMP_DIR"
 rm -rf "$TEMP_DIR"/.git
 rm -rf "$TEMP_DIR"/.gitignore
 rm -rf "$TEMP_DIR"/.DS_Store
+rm -rf "$TEMP_DIR"/.circleci
 rm -rf "$TEMP_DIR"/release.*
 rm -rf "$TEMP_DIR"/screenshots
 

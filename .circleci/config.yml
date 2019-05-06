@@ -22,9 +22,9 @@ jobs:
       - checkout
       - run:
           name: "Package extension"
-          command: ls
+          command: bash release.sh
       - persist_to_workspace:
-          root: /root/project
+          root: ./
           paths:
             - release.zip
 

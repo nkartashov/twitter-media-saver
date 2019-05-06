@@ -36,7 +36,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: /root/workspace
+          at: /tmp/workspace
       - run:
           name: "Publish to the Google Chrome Store"
-          command: bash scripts/publish.sh /root/workspace/package.zip
+          command: bash scripts/publish.sh /tmp/workspace/package.zip

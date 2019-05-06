@@ -22,7 +22,7 @@ jobs:
       - checkout
       - run:
           name: "Package extension"
-          command: bash release.sh
+          command: bash scripts/package.sh
       - persist_to_workspace:
           root: ./
           paths:
@@ -30,13 +30,13 @@ jobs:
 
   publish:
     docker:
-      - image: cibuilds/chrome-extension:latest
+      - image: circleci/node:lts
     environment:
       - APP_ID: ialfbkhnjhhgeplfephldjaofhggmkjn
     steps:
+      - checkout
       - attach_workspace:
           at: /root/workspace
       - run:
           name: "Publish to the Google Chrome Store"
-          command: |
-            publish /root/workspace/package.zip
+          command: bash scripts/publish.sh /root/workspace/package.zip

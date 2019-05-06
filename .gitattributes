@@ -1,0 +1,8 @@
+# git files
+.gitattributes export-ignore
+.gitignore export-ignore
+# release script itself
+release.sh export-ignore
+
+screenshots/ export-ignore
+.circleci/ export-ignore

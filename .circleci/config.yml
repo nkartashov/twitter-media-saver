@@ -50,6 +50,8 @@ jobs:
   firefox-publish:
     docker:
       - image: circleci/node:lts
+    environment:
+      - APP_ID: 47d88be1-99a8-4be7-9c17-e620adf4acbd
     steps:
       - checkout
       - run: npm install web-ext

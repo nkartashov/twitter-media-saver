@@ -6,7 +6,7 @@ workflows:
           filters:
             branches:
               only: master
-      - publish:
+      - chrome-publish:
           requires:
             - build
           filters:
@@ -28,7 +28,7 @@ jobs:
           paths:
             - package.zip
 
-  publish:
+  chrome-publish:
     docker:
       - image: circleci/node:lts
     environment:
@@ -39,4 +39,4 @@ jobs:
           at: /tmp/workspace
       - run:
           name: "Publish to the Google Chrome Store"
-          command: bash scripts/publish.sh /tmp/workspace/package.zip
+          command: bash scripts/chrome_publish.sh /tmp/workspace/package.zip

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+dirname "${BASH_SOURCE[0]}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TEMP_DIR="$(mktemp -d)"
 cp -r "$SCRIPT_DIR"/ "$TEMP_DIR"
@@ -11,5 +12,6 @@ rm -rf "$TEMP_DIR"/.circleci
 rm -rf "$TEMP_DIR"/release.*
 rm -rf "$TEMP_DIR"/screenshots
 
-zip -r "$SCRIPT_DIR"/release.zip "$TEMP_DIR"/
-rm -rf "$TEMP_DIR"
+ls "$TEMP_DIR"/
+# zip -r "$SCRIPT_DIR"/release.zip "$TEMP_DIR"/
+# rm -rf "$TEMP_DIR"

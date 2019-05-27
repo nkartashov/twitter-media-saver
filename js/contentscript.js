@@ -1,6 +1,4 @@
 var Downloader = {
-  DOWNLOAD_BUTTON_URL: chrome.extension.getURL('images/download-grey-64778D.svg'),
-  DOWNLOAD_BUTTON_HOVER_URL: chrome.extension.getURL('images/download-blue-00A2EC.svg'),
   DOWNLOADER_CLASS: "has-downloader-button",
 
   init: function() {

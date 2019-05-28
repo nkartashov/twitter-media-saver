@@ -38,17 +38,17 @@ var Downloader = {
       var singleVideo = parentTweet.find('.AdaptiveMedia-video');
       if (singlePhoto.length === 1) {
         link = Downloader.getSingleImageLink(singlePhoto);
-        console.log('Found a single photo at link ' + link);
+        console.debug('Found a single photo at link ' + link);
       } else if (singleVideo.length === 1) {
         link = Downloader.getSingleVideoLink(singleVideo);
-        console.log('Found a single video at link ' + link);
+        console.debug('Found a single video at link ' + link);
       } else {
         link = $('.Gallery-media').find('img').prop('src');
-        console.log('Found a zoomed in photo at link ' + link);
+        console.debug('Found a zoomed in photo at link ' + link);
       }
       if (link !== undefined) {
         link = Downloader.trimLarge(link);
-        console.log('Opening a new tab with link ' + link);
+        console.debug('Opening a new tab with link ' + link);
         window.open(link);
       }
     };
@@ -63,10 +63,10 @@ var Downloader = {
   addButtonToActionBar: function(button, actionBar) {
     var moreButton = actionBar.find('div.ProfileTweet-action--more');
     if (moreButton.length) {
-      console.log('Inserting into zoomed action bar');
+      console.debug('Inserting into zoomed action bar');
       moreButton.before(button);
     } else {
-      console.log('Inserting into normal action bar');
+      console.debug('Inserting into normal action bar');
       actionBar.append(button);
     }
   },

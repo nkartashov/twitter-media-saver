@@ -2,9 +2,12 @@ var Downloader = {
   DOWNLOADER_CLASS: "has-downloader-button",
 
   init: function() {
-    setInterval(function() {
+    new MutationObserver(function(mutations) {
       Downloader.injectButtons();
-    }, 2000);
+    }).observe(document, {
+      "childList": true,
+      "subtree": true
+    });
   },
 
   getSingleImageLink: function(singlePhoto) {

@@ -51,8 +51,8 @@ var Downloader = {
       }
       if (link !== undefined) {
         link = Downloader.trimLarge(link);
-        console.debug('Opening a new tab with link ' + link);
-        window.open(link);
+        console.debug('Opening a download dialog with link ' + link);
+        chrome.runtime.sendMessage(undefined, link);
       }
     };
     var actionBar = parentTweet.find(

@@ -11,6 +11,10 @@
     "128": "images/icon128.png"
   },
 
+  "background": {
+    "scripts": ["js/background.js"]
+  },
+
   "content_scripts": [
     {
       "matches": ["*://twitter.com/*"],
@@ -23,5 +27,9 @@
       	"js/contentscript.js"
   	  ]
     }
+  ],
+
+  "permissions": [
+    "downloads"
   ]
 }
